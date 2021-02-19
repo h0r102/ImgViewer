@@ -1,0 +1,10 @@
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\bin\Debug\ToolApps.exe.config
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\bin\Debug\ToolApps.exe
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\bin\Debug\ToolApps.pdb
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\obj\Debug\ToolApps.csprojAssemblyReference.cache
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\obj\Debug\ToolApps.Properties.Resources.resources
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\obj\Debug\ToolApps.csproj.GenerateResource.cache
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\obj\Debug\ToolApps.csproj.CoreCompileInputs.cache
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\obj\Debug\ToolApps.exe
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\obj\Debug\ToolApps.pdb
+C:\Users\bskhr\source\repos\ToolApps\ToolApps\obj\Debug\ToolApps.ImgViewer.resources
