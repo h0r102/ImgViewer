@@ -36,6 +36,7 @@ namespace ImgViewer
 			this.pointerPositionLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.canvas = new System.Windows.Forms.PictureBox();
 			this.toolbar = new ImgViewer.Toolbar();
+			this.filenameLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
 			this.SuspendLayout();
@@ -43,6 +44,7 @@ namespace ImgViewer
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.filenameLabel,
             this.imageSizeLabel,
             this.dataSizeLabel,
             this.scaleLabel,
@@ -89,16 +91,24 @@ namespace ImgViewer
 			// 
 			// toolbar
 			// 
+			this.toolbar.BackColor = System.Drawing.Color.White;
 			this.toolbar.Location = new System.Drawing.Point(0, 0);
 			this.toolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.toolbar.Name = "toolbar";
 			this.toolbar.Size = new System.Drawing.Size(960, 50);
 			this.toolbar.TabIndex = 2;
 			// 
+			// filenameLabel
+			// 
+			this.filenameLabel.Name = "filenameLabel";
+			this.filenameLabel.Size = new System.Drawing.Size(118, 17);
+			this.filenameLabel.Text = "toolStripStatusLabel1";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.White;
 			this.ClientSize = new System.Drawing.Size(984, 561);
 			this.Controls.Add(this.toolbar);
 			this.Controls.Add(this.canvas);
@@ -124,6 +134,7 @@ namespace ImgViewer
 		private System.Windows.Forms.ToolStripStatusLabel dataSizeLabel;
 		private System.Windows.Forms.ToolStripStatusLabel scaleLabel;
 		private System.Windows.Forms.ToolStripStatusLabel pointerPositionLabel;
+		private System.Windows.Forms.ToolStripStatusLabel filenameLabel;
 	}
 }
 

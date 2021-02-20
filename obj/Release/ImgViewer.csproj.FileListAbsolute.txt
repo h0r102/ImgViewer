@@ -12,3 +12,4 @@ C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.csproj.Core
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.csproj.CopyComplete
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.exe
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.pdb
+C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.csprojAssemblyReference.cache

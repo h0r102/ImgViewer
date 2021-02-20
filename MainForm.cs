@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,7 +20,8 @@ namespace ImgViewer
 		private Single _angle;
 		private Single _scale;
 		private System.Drawing.Drawing2D.Matrix _img_mat;
-		private bool _mouse_down_flg = false;
+		private bool _mouse_left_down_flg = false;
+		private bool _mouse_right_down_flg = false;
 		private PointF _old_point;
 
 		public MainForm(string img_path=null)
@@ -54,6 +56,7 @@ namespace ImgViewer
 			toolbar.maximizeButtonClick += new System.Windows.Forms.MouseEventHandler(this.toolbar_maximizeButtonClick);
 			toolbar.clockwiseButtonClick += new System.Windows.Forms.MouseEventHandler(this.toolbar_clockwiseButtonClick);
 			toolbar.counterclockwiseButtonClick += new System.Windows.Forms.MouseEventHandler(this.toolbar_counterclockwiseButtonClick);
+			toolbar.copyButtonClick += new System.Windows.Forms.MouseEventHandler(this.toolbar_copyButtonClick);
 
 			// キャンバスへのDragDropを有効化
 			canvas.AllowDrop = true;
@@ -68,6 +71,7 @@ namespace ImgViewer
 			else
 			{
 				_img_path = null;
+				filenameLabel.Text = "nofile";
 				imageSizeLabel.Text = $"ImageSize: ";
 				dataSizeLabel.Text = $"DataSize: ";
 				scaleLabel.Text = $"scale: ";
@@ -132,7 +136,14 @@ namespace ImgViewer
 					canvas.Focus();
 					_old_point.X = e.X;
 					_old_point.Y = e.Y;
-					_mouse_down_flg = true;
+					_mouse_left_down_flg = true;
+					break;
+				// 右ボタン
+				case MouseButtons.Right:
+					canvas.Focus();
+					_old_point.X = e.X;
+					_old_point.Y = e.Y;
+					_mouse_right_down_flg = true;
 					break;
 				// 下ボタン
 				case MouseButtons.XButton1:
@@ -148,13 +159,26 @@ namespace ImgViewer
 		}
 		private void canvas_MouseMove(object sender, MouseEventArgs e)
 		{
-			// マウスをクリックしながら移動するとき、画像を移動する
-			if (_mouse_down_flg == true)
+			// マウスを左クリックしながら移動するとき、画像を移動する
+			if (_mouse_left_down_flg == true)
 			{
 				// 画像の移動
 				_img_mat.Translate(e.X - _old_point.X, e.Y - _old_point.Y, System.Drawing.Drawing2D.MatrixOrder.Append);
 				// 描画
 				RedrawImage();
+			}
+			else if (_mouse_right_down_flg == true)
+			{
+				// 描画
+				RedrawImage();
+				// 矩形の描画
+				RectangleF rect = GetRectangle(new PointF(_old_point.X, _old_point.Y), new PointF(e.X, e.Y));
+				Brush brush = new SolidBrush(Color.FromArgb(80, Color.Gray));
+				_img_graph.FillRectangle(brush, rect);
+				// 更新
+				canvas.Refresh();
+				pointerPositionLabel.Text = $"x: {_old_point.X}, y: {_old_point.Y}";
+				return;
 			}
 			// ポインタ位置の保持
 			_old_point.X = e.X;
@@ -163,7 +187,31 @@ namespace ImgViewer
 		}
 		private void canvas_MouseUp(object sender, MouseEventArgs e)
 		{
-			_mouse_down_flg = false;
+			// マウスを右クリックで、選択した矩形範囲をコピーする
+			if (_mouse_right_down_flg == true)
+			{
+				// 描画
+				RedrawImage();
+				RectangleF rect = GetRectangle(new PointF(_old_point.X, _old_point.Y), new PointF(e.X, e.Y));
+				if (rect.Width * rect.Height == 0)
+				{
+					return;
+				}
+				Bitmap cp_image = new Bitmap((int)rect.Width, (int)rect.Height);
+				_img_mat.CloneRectImage(rect, (Bitmap)canvas.Image, ref cp_image);
+				try
+				{
+					Clipboard.SetImage(cp_image);
+					cp_image.Dispose();
+					MessageBox.Show("クリップボードにコピーしました。");
+				}
+				catch (Exception except)
+				{
+					MessageBox.Show($"コピーに失敗しました。\n{except}");
+				}
+			}
+			_mouse_left_down_flg = false;
+			_mouse_right_down_flg = false;
 		}
 		private void canvas_MouseWheel(object sender, MouseEventArgs e)
 		{
@@ -171,7 +219,7 @@ namespace ImgViewer
 			if (e.Delta > 0)
 			{
 				// マウスをクリックしているとき、右回転する
-				if (_mouse_down_flg == true)
+				if (_mouse_left_down_flg == true)
 				{
 					// ポインタ位置周りに回転
 					RotateImage(5f, e.Location);
@@ -186,7 +234,7 @@ namespace ImgViewer
 			else
 			{
 				// マウスをクリックしているとき、左回転する
-				if (_mouse_down_flg == true)
+				if (_mouse_left_down_flg == true)
 				{
 					// ポインタ位置周りに回転
 					RotateImage(-5f, e.Location);
@@ -254,6 +302,34 @@ namespace ImgViewer
 		{
 			RotateImage(-90f, new Point(canvas.Width / 2, canvas.Height / 2));
 		}
+		private void toolbar_copyButtonClick(object sender, MouseEventArgs e)
+		{
+			RectangleF rect = new RectangleF(new PointF(0, 0), canvas.Size);
+			if (rect.Width * rect.Height == 0)
+			{
+				return;
+			}
+			// 矩形の描画
+			Brush brush = new SolidBrush(Color.FromArgb(80, Color.Gray));
+			_img_graph.FillRectangle(brush, rect);
+			// 更新
+			canvas.Refresh();
+			Thread.Sleep(100);
+			// 描画
+			RedrawImage();
+			Bitmap cp_image = new Bitmap((int)rect.Width, (int)rect.Height);
+			_img_mat.CloneRectImage(rect, (Bitmap)canvas.Image, ref cp_image);
+			try
+			{
+				Clipboard.SetImage(cp_image);
+				cp_image.Dispose();
+				MessageBox.Show("クリップボードにコピーしました。");
+			}
+			catch (Exception except)
+			{
+				MessageBox.Show($"コピーに失敗しました。\n{except}");
+			}
+		}
 
 		/// end イベントモジュール
 
@@ -318,6 +394,7 @@ namespace ImgViewer
 			_image = new Bitmap(file_path);
 			// 画像をキャンバスに合わせて表示する行列の計算
 			ZoomFitImage();
+			filenameLabel.Text = $"{file_path}";
 			imageSizeLabel.Text = $"ImageSize: {_image.Width}x{_image.Height}";
 			double data_size = Math.Round((double)new System.IO.FileInfo(_img_path).Length / 1024 / 1024, 3);
 			dataSizeLabel.Text = $"DataSize: {data_size}MB";
@@ -466,6 +543,20 @@ namespace ImgViewer
 				}
 			}
 			return image_files.ToArray();
+		}
+		/// <summary>
+		/// 2点の座標から矩形の位置とサイズを取得する
+		/// </summary>
+		/// <param name="p1">座標</param>
+		/// <param name="p2">座標</param>
+		/// <returns></returns>
+		public Rectangle GetRectangle(PointF p1, PointF p2)
+		{
+			int x = (int)Math.Min(p1.X, p2.X);
+			int y = (int)Math.Min(p1.Y, p2.Y);
+			int width = (int)Math.Abs(p1.X - p2.X);
+			int height = (int)Math.Abs(p1.Y - p2.Y);
+			return new Rectangle(x, y, width, height);
 		}
 		/// end 画像処理モジュール
 
