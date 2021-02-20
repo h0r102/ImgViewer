@@ -15,6 +15,7 @@ namespace ImgViewer
 		public event MouseEventHandler maximizeButtonClick;
 		public event MouseEventHandler clockwiseButtonClick;
 		public event MouseEventHandler counterclockwiseButtonClick;
+		public event MouseEventHandler copyButtonClick;
 		public Toolbar()
 		{
 			InitializeComponent();
@@ -53,6 +54,9 @@ namespace ImgViewer
 			counterclockwiseButton.BackgroundImageLayout = ImageLayout.Zoom;
 			counterclockwiseButton.BackgroundImage = Properties.Resources.counterclockwise;
 			counterclockwiseButton.MouseClick += counterclockwiseButton_MouseClick;
+			copyButton.BackgroundImageLayout = ImageLayout.Zoom;
+			copyButton.BackgroundImage = Properties.Resources.copy;
+			copyButton.MouseClick += copyButton_MouseClick;
 		}
 
 
@@ -97,6 +101,9 @@ namespace ImgViewer
 		{
 			this.counterclockwiseButtonClick(sender, e);
 		}
-
+		private void copyButton_MouseClick(object sender, MouseEventArgs e)
+		{
+			this.copyButtonClick(sender, e);
+		}
 	}
 }

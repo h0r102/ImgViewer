@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="material\clockwise.gif" />
+    <None Include="material\copy.gif" />
     <Content Include="material\counterclockwise.gif" />
     <Content Include="material\end.gif" />
     <Content Include="material\file.gif" />

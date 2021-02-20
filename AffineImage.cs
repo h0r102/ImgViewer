@@ -93,5 +93,35 @@ namespace ImgViewer
             mat.Translate(center.X, center.Y, System.Drawing.Drawing2D.MatrixOrder.Append);
         }
 
+        /// <summary>
+        /// 指定した矩形の画像を作成する
+        /// </summary>
+        /// <param name="mat">アフィン変換行列</param>
+        /// <param name="rect">描画範囲</param>
+        /// <param name="origin">元画像</param>
+        /// <param name="clone">描画先画像</param>
+        public static void CloneRectImage(this System.Drawing.Drawing2D.Matrix mat, RectangleF rect, Bitmap origin, ref Bitmap clone)
+        {
+            if (origin == null)
+            {
+                return;
+            }
+            if (rect.Width <= 0 || rect.Height <= 0)
+			{
+                return;
+			}
+			Graphics graph = Graphics.FromImage(clone);
+            // 画像の左上、右上、左下の座標
+            var points = new PointF[]
+            {
+                new PointF(0, 0),
+                new PointF(clone.Width, 0),
+                new PointF(0, clone.Height)
+            };
+            //// アフィン変換で描画先の座標に変換する
+            //mat.TransformPoints(points);
+            // 描画
+            graph.DrawImage(origin, points, rect, GraphicsUnit.Pixel);
+        }
     }
 }
