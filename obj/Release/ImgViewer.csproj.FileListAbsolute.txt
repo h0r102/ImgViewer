@@ -4,6 +4,7 @@ C:\Users\bskhr\source\repos\ToolApps\ImgViewer\bin\Release\ImgViewer.pdb
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\bin\Release\MetroFramework.Design.dll
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\bin\Release\MetroFramework.dll
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\bin\Release\MetroFramework.Fonts.dll
+C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.csprojAssemblyReference.cache
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.MainForm.resources
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.Properties.Resources.resources
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.Toolbar.resources
@@ -12,4 +13,3 @@ C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.csproj.Core
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.csproj.CopyComplete
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.exe
 C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.pdb
-C:\Users\bskhr\source\repos\ToolApps\ImgViewer\obj\Release\ImgViewer.csprojAssemblyReference.cache
